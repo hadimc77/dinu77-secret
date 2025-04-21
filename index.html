@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fruit Code Encoder 🍍</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fffbe7;
+      text-align: center;
+      padding: 2rem;
+    }
+    textarea {
+      width: 90%;
+      height: 100px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: #ffd966;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .output {
+      margin-top: 1rem;
+      white-space: pre-wrap;
+      font-weight: bold;
+    }
+    #copyBtn {
+      background: #a0e7e5;
+    }
+    #whatsappBtn {
+      background: #25d366;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>🥝 Fruit Code Generator 🍓</h1>
+
+  <textarea id="inputMessage" placeholder="Type your secret message here..."></textarea><br>
+  <button onclick="encodeMessage()">Encode 🍍</button>
+  <button onclick="decodeMessage()">Decode 🍉</button>
+  <button id="copyBtn" onclick="copyToClipboard()">Copy 📋</button>
+  <button id="whatsappBtn" onclick="shareOnWhatsApp()">Share on WhatsApp 📤</button>
+
+  <div class="output" id="outputArea"></div>
+
+  <script>
+    const fruitMap = {
+      A: 'Apple', B: 'Banana', C: 'Cherry', D: 'Dragonfruit',
+      E: 'Elderberry', F: 'Fig', G: 'Grape', H: 'Honeydew',
+      I: 'Iceberry', J: 'Jackfruit', K: 'Kiwi', L: 'Lemon',
+      M: 'Mango', N: 'Nectarine', O: 'Orange', P: 'Papaya',
+      Q: 'Quince', R: 'Raspberry', S: 'Strawberry', T: 'Tangerine',
+      U: 'Ugli', V: 'Vanilla', W: 'Watermelon', X: 'Xigua',
+      Y: 'Yuzu', Z: 'Zucchini'
+    };
+
+    const reverseMap = {};
+    for (const [key, val] of Object.entries(fruitMap)) {
+      reverseMap[val.toLowerCase()] = key;
+    }
+
+    function encodeMessage() {
+      const msg = document.getElementById("inputMessage").value.toUpperCase();
+      const encoded = msg.split('').map(char => {
+        if (fruitMap[char]) return fruitMap[char];
+        if (char === ' ') return 'SPACE';
+        return char;
+      }).join(' ');
+      document.getElementById("outputArea").innerText = encoded;
+    }
+
+    function decodeMessage() {
+      const code = document.getElementById("inputMessage").value.trim().split(/\s+/);
+      const decoded = code.map(word => {
+        if (word.toUpperCase() === 'SPACE') return ' ';
+        return reverseMap[word.toLowerCase()] || '?';
+      }).join('');
+      document.getElementById("outputArea").innerText = decoded;
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById("outputArea").innerText;
+      navigator.clipboard.writeText(output).then(() => {
+        alert("Copied to clipboard! ✅");
+      }, err => {
+        alert("Failed to copy 😓");
+      });
+    }
+
+    function shareOnWhatsApp() {
+      const output = document.getElementById("outputArea").innerText;
+      const url = `https://wa.me/?text=${encodeURIComponent(output)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
